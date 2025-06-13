@@ -27,7 +27,7 @@ public class GitHubRepoScoresController {
   public final GitHubRepoScoresService gitHubRepoScoresService;
 
   @PostMapping(
-      value = "/scores",
+      value = "/requests",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PostGitHubRepoScoresResponseBodyDto> createGitHubRepoScoresRequest(
@@ -37,7 +37,7 @@ public class GitHubRepoScoresController {
     return ResponseEntity.ok(requestDto);
   }
 
-  @GetMapping(value = "/scores/{request-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/requests/{request-id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<GetGitHubRepoScoresResponseBodyDto> retrieveRepositoryScores(
       @PathVariable(name = "request-id") UUID requestId) throws JsonProcessingException {
     GetGitHubRepoScoresResponseBodyDto resultDto = gitHubRepoScoresService.getRequest(requestId);

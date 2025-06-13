@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,11 +28,12 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-@DirtiesContext
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class GithubRepoScoresApplicationTests {
 
-  private static final String CREATE_GITHUB_REPO_SCORES_REQUEST_ENDPOINT = "/scores";
-  private static final String RETRIEVE_GITHUB_REPO_SCORES_REQUEST_ENDPOINT = "/scores/{request-id}";
+  private static final String CREATE_GITHUB_REPO_SCORES_REQUEST_ENDPOINT = "/requests";
+  private static final String RETRIEVE_GITHUB_REPO_SCORES_REQUEST_ENDPOINT =
+      "/requests/{request-id}";
 
   @Autowired protected MockMvc mvc;
   @Autowired protected ObjectMapper objectMapper;
