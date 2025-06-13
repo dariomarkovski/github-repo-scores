@@ -15,6 +15,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component, that processes a single request, by fetching the repositories according to the request
+ * query parameters, invokes the calculator and saves the results to the DB.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j

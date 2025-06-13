@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+/** Scheduler, that cleans up requests older than 5 minutes. Executes every minute. */
 @Service
 @RequiredArgsConstructor
 @Slf4j

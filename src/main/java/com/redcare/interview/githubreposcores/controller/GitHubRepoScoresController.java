@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+/** REST Controller, responsible for creating new and retrieving existing requests. */
 @RestController
 @RequiredArgsConstructor
 @Slf4j

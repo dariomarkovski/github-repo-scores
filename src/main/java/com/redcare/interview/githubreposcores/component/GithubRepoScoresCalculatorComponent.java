@@ -7,6 +7,18 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Component, that calculates the scores of a list of repositories. The score is calculated relative
+ * to the other elements in the list. For each property (stars, forks, time since update) we get the
+ * min and max values from the repositories and calculate the score relative to those.
+ *
+ * <p>The stars score of a repository would be: (stars - minStars) / (maxStars - minStars).
+ *
+ * <p>For the time since update, we invert the value, since we want the smallest value to be the
+ * best score.
+ *
+ * <p>The weights chosen are 0.55 for stars, 0.35 for forks and 0.1 for recency.
+ */
 @Component
 @Slf4j
 public class GithubRepoScoresCalculatorComponent {

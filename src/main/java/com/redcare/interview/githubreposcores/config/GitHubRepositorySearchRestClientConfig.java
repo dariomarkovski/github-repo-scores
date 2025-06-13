@@ -16,6 +16,11 @@ import org.springframework.web.service.invoker.HttpRequestValues;
 import org.springframework.web.service.invoker.HttpServiceArgumentResolver;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+/**
+ * Configuration that sets up the ${@link GitHubRepositorySearchHttpService} bean so that we can
+ * execute requests to the GitHub API. It uses the token from the application.properties, which
+ * comes from environment variables.
+ */
 @Configuration
 @Slf4j
 public class GitHubRepositorySearchRestClientConfig {

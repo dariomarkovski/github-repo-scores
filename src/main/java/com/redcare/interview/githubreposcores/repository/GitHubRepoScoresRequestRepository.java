@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/** Repository for ${@link GitHubRepoScoresRequestEntity}. */
 public interface GitHubRepoScoresRequestRepository
     extends JpaRepository<GitHubRepoScoresRequestEntity, UUID> {
 

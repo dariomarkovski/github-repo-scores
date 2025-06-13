@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/** Class, used to map the GitHub API Repository Search response to. */
 @Getter
 @AllArgsConstructor
 public class GitHubRepositorySearchResult {

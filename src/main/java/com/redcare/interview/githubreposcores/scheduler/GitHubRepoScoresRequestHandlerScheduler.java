@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+/** Scheduler that processes the GitHub Repo Scores requests. Executes every 2 seconds. */
 @Service
 @RequiredArgsConstructor
 @Slf4j

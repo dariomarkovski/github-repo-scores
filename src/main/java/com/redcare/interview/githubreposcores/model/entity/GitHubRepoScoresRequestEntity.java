@@ -19,6 +19,7 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/** Entity, that represents a GitHub Repo Scores Request. */
 @Entity
 @Table(name = "github_repo_scores_request")
 @Builder
