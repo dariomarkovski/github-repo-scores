@@ -4,7 +4,7 @@ Spring Boot Application that provides a list of GitHub repositories based on a u
 
 To start the application you need to create and use your own GitHub token and set it in the environment variables.
 
-Endpoint `POST /scores`: 
+Endpoint `POST /requests`: 
 
 Creates a new GitHub Repo Scores request and return a requestId, that the user can use to check the results.
 Sample response:
@@ -14,7 +14,7 @@ Sample response:
 }
 ```
 
-Endpoint `GET /scores/{request-id}`: 
+Endpoint `GET /requests/{request-id}`: 
 
 Gets the results for a GitHub Repo Scores request.
 Sample response:
