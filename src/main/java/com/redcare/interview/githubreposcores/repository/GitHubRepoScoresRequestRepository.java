@@ -15,7 +15,7 @@ public interface GitHubRepoScoresRequestRepository
   Optional<GitHubRepoScoresRequestEntity> findByCreatedAndLanguage(
       LocalDate created, String language);
 
-  Optional<GitHubRepoScoresRequestEntity> findByProcessedIs(boolean processed);
+  Optional<GitHubRepoScoresRequestEntity> findFirstByProcessedIs(boolean processed);
 
   List<GitHubRepoScoresRequestEntity> findAllByProcessedTimestampBefore(
       Instant processedTimestampToCompare);

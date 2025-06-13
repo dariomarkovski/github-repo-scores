@@ -22,7 +22,7 @@ public class GitHubRepoScoresRequestHandlerScheduler {
   @Scheduled(fixedDelay = 2_000)
   public void scheduled() throws JsonProcessingException {
     Optional<GitHubRepoScoresRequestEntity> optionalUnprocessedRequest =
-        gitHubRepoScoresRequestRepository.findByProcessedIs(false);
+        gitHubRepoScoresRequestRepository.findFirstByProcessedIs(false);
     if (optionalUnprocessedRequest.isPresent()) {
       GitHubRepoScoresRequestEntity unprocessedRequest = optionalUnprocessedRequest.get();
       gitHubRepoScoresRequestProcessorComponent.processGitHubRepoScoresRequest(unprocessedRequest);
