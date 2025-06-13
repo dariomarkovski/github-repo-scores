@@ -25,14 +25,18 @@ public class GitHubRepoScoresService {
 
   public PostGitHubRepoScoresResponseBodyDto createNewScoresRequest(
       PostGitHubRepoScoresRequestBodyDto requestBodyDto) {
-    Optional<GitHubRepoScoresRequestEntity> optionalRequest = gitHubRepoScoresRequestRepository.findByCreatedAndLanguage(
-        requestBodyDto.created(), requestBodyDto.language());
+    Optional<GitHubRepoScoresRequestEntity> optionalRequest =
+        gitHubRepoScoresRequestRepository.findByCreatedAndLanguage(
+            requestBodyDto.created(), requestBodyDto.language());
     GitHubRepoScoresRequestEntity request;
     if (optionalRequest.isPresent()) {
       request = optionalRequest.get();
     } else {
-      GitHubRepoScoresRequestEntity newRequest = GitHubRepoScoresRequestEntity.builder()
-          .created(requestBodyDto.created()).language(requestBodyDto.language()).build();
+      GitHubRepoScoresRequestEntity newRequest =
+          GitHubRepoScoresRequestEntity.builder()
+              .created(requestBodyDto.created())
+              .language(requestBodyDto.language())
+              .build();
       request = gitHubRepoScoresRequestRepository.save(newRequest);
     }
     return new PostGitHubRepoScoresResponseBodyDto(request.getId());
@@ -40,18 +44,19 @@ public class GitHubRepoScoresService {
 
   public GetGitHubRepoScoresResponseBodyDto getRequest(UUID requestId)
       throws JsonProcessingException {
-    Optional<GitHubRepoScoresRequestEntity> optionalRequest = gitHubRepoScoresRequestRepository.findById(
-        requestId);
+    Optional<GitHubRepoScoresRequestEntity> optionalRequest =
+        gitHubRepoScoresRequestRepository.findById(requestId);
     if (optionalRequest.isPresent()) {
       GitHubRepoScoresRequestEntity request = optionalRequest.get();
-      List<GitHubRepositorySearchResultItem> repositories = objectMapper.readValue(
-          request.getSearchResult(),
-          objectMapper.getTypeFactory().constructCollectionType(
-              List.class, GitHubRepositorySearchResultItem.class));
-      return new GetGitHubRepoScoresResponseBodyDto(requestId, request.isProcessed(),
-          request.getProcessedTimestamp(), repositories);
+      List<GitHubRepositorySearchResultItem> repositories =
+          objectMapper.readValue(
+              request.getSearchResult(),
+              objectMapper
+                  .getTypeFactory()
+                  .constructCollectionType(List.class, GitHubRepositorySearchResultItem.class));
+      return new GetGitHubRepoScoresResponseBodyDto(
+          requestId, request.isProcessed(), request.getProcessedTimestamp(), repositories);
     }
     return null;
   }
-
 }

@@ -11,8 +11,10 @@ public class GitHubRepositorySearchResult {
 
   @JsonProperty("total_count")
   long totalCount;
+
   @JsonProperty("incomplete_results")
   boolean incompleteResults;
+
   @JsonProperty("items")
   List<GitHubRepositorySearchResultItem> items;
 
@@ -22,21 +24,26 @@ public class GitHubRepositorySearchResult {
 
     @JsonProperty("id")
     long id;
+
     @JsonProperty("full_name")
     String fullName;
+
     @JsonProperty("language")
     String language;
+
     @JsonProperty("stargazers_count")
     long stars;
+
     @JsonProperty("forks_count")
     long forks;
+
     @JsonProperty("created_at")
     Instant createdAt;
+
     @JsonProperty("updated_at")
     Instant updatedAt;
+
     @JsonProperty("score")
     double score;
-
   }
-
 }

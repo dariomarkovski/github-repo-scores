@@ -27,20 +27,25 @@ public class GitHubRepositorySearchRestClientConfig {
 
   @Bean
   public GitHubRepositorySearchHttpService gitHubRepositorySearchHttpService() {
-    RestClient restClient = RestClient.builder().baseUrl(GITHUB_API_BASE_URL)
-        .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + githubToken).build();
+    RestClient restClient =
+        RestClient.builder()
+            .baseUrl(GITHUB_API_BASE_URL)
+            .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + githubToken)
+            .build();
     RestClientAdapter adapter = RestClientAdapter.create(restClient);
-    HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter)
-        .customArgumentResolver(new GitHubRepositorySearchQueryArgumentResolver()).build();
+    HttpServiceProxyFactory factory =
+        HttpServiceProxyFactory.builderFor(adapter)
+            .customArgumentResolver(new GitHubRepositorySearchQueryArgumentResolver())
+            .build();
     return factory.createClient(GitHubRepositorySearchHttpService.class);
   }
 
-  public static class GitHubRepositorySearchQueryArgumentResolver implements
-      HttpServiceArgumentResolver {
+  public static class GitHubRepositorySearchQueryArgumentResolver
+      implements HttpServiceArgumentResolver {
 
     @Override
-    public boolean resolve(Object argument, MethodParameter parameter,
-        HttpRequestValues.Builder requestValues) {
+    public boolean resolve(
+        Object argument, MethodParameter parameter, HttpRequestValues.Builder requestValues) {
       if (parameter.getParameterType().equals(GitHubRepositorySearchQuery.class)) {
         GitHubRepositorySearchQuery search = (GitHubRepositorySearchQuery) argument;
 
@@ -58,10 +63,10 @@ public class GitHubRepositorySearchRestClientConfig {
         String finalParams = joinedParams.isEmpty() ? "Q" : joinedParams;
 
         requestValues.addRequestParameter("q", finalParams);
+        requestValues.addRequestParameter("per_page", "50");
         return true;
       }
       return false;
     }
   }
-
 }

@@ -8,6 +8,4 @@ public interface GitHubRepositorySearchHttpService {
 
   @GetExchange("/search/repositories")
   GitHubRepositorySearchResult searchRepositories(GitHubRepositorySearchQuery query);
-
-
 }

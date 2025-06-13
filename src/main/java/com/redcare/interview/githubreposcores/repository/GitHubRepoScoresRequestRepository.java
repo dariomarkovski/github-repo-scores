@@ -8,16 +8,14 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GitHubRepoScoresRequestRepository extends
-    JpaRepository<GitHubRepoScoresRequestEntity, UUID> {
+public interface GitHubRepoScoresRequestRepository
+    extends JpaRepository<GitHubRepoScoresRequestEntity, UUID> {
 
-  Optional<GitHubRepoScoresRequestEntity> findByCreatedAndLanguage(LocalDate created,
-      String language);
+  Optional<GitHubRepoScoresRequestEntity> findByCreatedAndLanguage(
+      LocalDate created, String language);
 
-  Optional<GitHubRepoScoresRequestEntity> findByProcessedIs(
-      boolean processed);
+  Optional<GitHubRepoScoresRequestEntity> findByProcessedIs(boolean processed);
 
   List<GitHubRepoScoresRequestEntity> findAllByProcessedTimestampBefore(
       Instant processedTimestampToCompare);
-
 }

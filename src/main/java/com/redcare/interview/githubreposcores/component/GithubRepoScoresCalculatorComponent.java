@@ -17,23 +17,26 @@ public class GithubRepoScoresCalculatorComponent {
         repository -> calculateSingleRepositoryScore(repository, minAndMaxInformation));
   }
 
-  private void calculateSingleRepositoryScore(GitHubRepositorySearchResultItem repository,
-      MinAndMaxInformation minAndMaxInformation) {
+  private void calculateSingleRepositoryScore(
+      GitHubRepositorySearchResultItem repository, MinAndMaxInformation minAndMaxInformation) {
     // calculate stars score
-    double starScore = calculateSingleRepositoryFieldScore(repository.getStars(),
-        minAndMaxInformation.maxStars,
-        minAndMaxInformation.minStars);
+    double starScore =
+        calculateSingleRepositoryFieldScore(
+            repository.getStars(), minAndMaxInformation.maxStars, minAndMaxInformation.minStars);
     double weightedStarScore = 0.55 * starScore;
     // calculate forks score
-    double forksScore = calculateSingleRepositoryFieldScore(repository.getForks(),
-        minAndMaxInformation.maxForks,
-        minAndMaxInformation.minForks);
+    double forksScore =
+        calculateSingleRepositoryFieldScore(
+            repository.getForks(), minAndMaxInformation.maxForks, minAndMaxInformation.minForks);
     // calculate time score
     double weightedForksScore = 0.35 * forksScore;
-    double timeScore = 1 - calculateSingleRepositoryFieldScore(
-        millisSinceUpdate(repository.getUpdatedAt(), minAndMaxInformation.valueForComparingTimes),
-        minAndMaxInformation.maxTime,
-        minAndMaxInformation.minTime);
+    double timeScore =
+        1
+            - calculateSingleRepositoryFieldScore(
+                millisSinceUpdate(
+                    repository.getUpdatedAt(), minAndMaxInformation.valueForComparingTimes),
+                minAndMaxInformation.maxTime,
+                minAndMaxInformation.minTime);
     double weightedTimeScore = 0.1 * timeScore;
     // calculate total score
     double finalScore = weightedStarScore + weightedForksScore + weightedTimeScore;
@@ -75,18 +78,20 @@ public class GithubRepoScoresCalculatorComponent {
         minTime = millisSinceUpdate;
       }
     }
-    return new MinAndMaxInformation(maxStars, minStars, maxForks, minForks, maxTime, minTime,
-        valueForComparingTimes);
+    return new MinAndMaxInformation(
+        maxStars, minStars, maxForks, minForks, maxTime, minTime, valueForComparingTimes);
   }
 
   private long millisSinceUpdate(Instant updatedAt, Instant compareToValue) {
     return Duration.between(updatedAt, compareToValue).toMillis();
   }
 
-  private record MinAndMaxInformation(long maxStars, long minStars, long maxForks,
-                                      long minForks, long maxTime, long minTime,
-                                      Instant valueForComparingTimes) {
-
-  }
-
+  private record MinAndMaxInformation(
+      long maxStars,
+      long minStars,
+      long maxForks,
+      long minForks,
+      long maxTime,
+      long minTime,
+      Instant valueForComparingTimes) {}
 }

@@ -21,19 +21,22 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class GithubRepoScoresController {
+public class GitHubRepoScoresController {
 
   public final GitHubRepoScoresService gitHubRepoScoresService;
 
-  @PostMapping(value = "/scores", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(
+      value = "/scores",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PostGitHubRepoScoresResponseBodyDto> createGitHubRepoScoresRequest(
       @RequestBody(required = false) PostGitHubRepoScoresRequestBodyDto requestBodyDto) {
-    PostGitHubRepoScoresResponseBodyDto requestDto = gitHubRepoScoresService.createNewScoresRequest(
-        requestBodyDto);
+    PostGitHubRepoScoresResponseBodyDto requestDto =
+        gitHubRepoScoresService.createNewScoresRequest(requestBodyDto);
     return ResponseEntity.ok(requestDto);
   }
 
-  @GetMapping("/scores/{request-id}")
+  @GetMapping(value = "/scores/{request-id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<GetGitHubRepoScoresResponseBodyDto> retrieveRepositoryScores(
       @PathVariable(name = "request-id") UUID requestId) throws JsonProcessingException {
     GetGitHubRepoScoresResponseBodyDto resultDto = gitHubRepoScoresService.getRequest(requestId);
@@ -42,5 +45,4 @@ public class GithubRepoScoresController {
     }
     return ResponseEntity.ok(resultDto);
   }
-
 }

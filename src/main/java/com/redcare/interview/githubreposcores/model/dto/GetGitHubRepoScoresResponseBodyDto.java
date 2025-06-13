@@ -5,8 +5,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-public record GetGitHubRepoScoresResponseBodyDto(UUID requestId, boolean processed,
-                                                 Instant processedTimestamp,
-                                                 List<GitHubRepositorySearchResultItem> repositories) {
-
-}
+public record GetGitHubRepoScoresResponseBodyDto(
+    UUID requestId,
+    boolean processed,
+    Instant processedTimestamp,
+    List<GitHubRepositorySearchResultItem> repositories) {}

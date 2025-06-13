@@ -52,5 +52,4 @@ public class GitHubRepoScoresRequestEntity {
   @CreatedDate
   @Column(name = "created_date")
   private Instant created_date;
-
 }

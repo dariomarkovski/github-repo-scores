@@ -20,9 +20,9 @@ public class GitHubRepoScoresCleanupScheduler {
   @Scheduled(fixedDelay = 60_000)
   public void scheduled() {
     Instant processedTimestampToCompare = Instant.now().minus(5, ChronoUnit.MINUTES);
-    List<GitHubRepoScoresRequestEntity> cleanupList = gitHubRepoScoresRequestRepository.findAllByProcessedTimestampBefore(
-        processedTimestampToCompare);
+    List<GitHubRepoScoresRequestEntity> cleanupList =
+        gitHubRepoScoresRequestRepository.findAllByProcessedTimestampBefore(
+            processedTimestampToCompare);
     gitHubRepoScoresRequestRepository.deleteAll(cleanupList);
   }
-
 }

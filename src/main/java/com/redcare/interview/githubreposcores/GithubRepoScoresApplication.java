@@ -13,5 +13,4 @@ public class GithubRepoScoresApplication {
   public static void main(String[] args) {
     SpringApplication.run(GithubRepoScoresApplication.class, args);
   }
-
 }
