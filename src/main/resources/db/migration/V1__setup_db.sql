@@ -5,7 +5,7 @@ CREATE TABLE github_repo_scores_request
     processed_timestamp TIMESTAMP,
     created             DATE,
     language            VARCHAR(50),
-    search_result       TEXT,
+    repositories        TEXT,
     created_date        TIMESTAMP NOT NULL
 );
 

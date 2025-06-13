@@ -45,6 +45,9 @@ public class GithubRepoScoresCalculatorComponent {
 
   private double calculateSingleRepositoryFieldScore(long value, long maxValue, long minValue) {
     long delta = maxValue - minValue;
+    if (delta == 0) {
+      return 0.5;
+    }
     return ((double) value - minValue) / delta;
   }
 

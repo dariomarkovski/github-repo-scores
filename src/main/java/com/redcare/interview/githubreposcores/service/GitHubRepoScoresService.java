@@ -8,7 +8,10 @@ import com.redcare.interview.githubreposcores.model.dto.PostGitHubRepoScoresRequ
 import com.redcare.interview.githubreposcores.model.dto.PostGitHubRepoScoresResponseBodyDto;
 import com.redcare.interview.githubreposcores.model.entity.GitHubRepoScoresRequestEntity;
 import com.redcare.interview.githubreposcores.repository.GitHubRepoScoresRequestRepository;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +28,16 @@ public class GitHubRepoScoresService {
 
   public PostGitHubRepoScoresResponseBodyDto createNewScoresRequest(
       PostGitHubRepoScoresRequestBodyDto requestBodyDto) {
+    LocalDate created = requestBodyDto != null ? requestBodyDto.created() : null;
+    String language = requestBodyDto != null ? requestBodyDto.language() : null;
     Optional<GitHubRepoScoresRequestEntity> optionalRequest =
-        gitHubRepoScoresRequestRepository.findByCreatedAndLanguage(
-            requestBodyDto.created(), requestBodyDto.language());
+        gitHubRepoScoresRequestRepository.findByCreatedAndLanguage(created, language);
     GitHubRepoScoresRequestEntity request;
     if (optionalRequest.isPresent()) {
       request = optionalRequest.get();
     } else {
       GitHubRepoScoresRequestEntity newRequest =
-          GitHubRepoScoresRequestEntity.builder()
-              .created(requestBodyDto.created())
-              .language(requestBodyDto.language())
-              .build();
+          GitHubRepoScoresRequestEntity.builder().created(created).language(language).build();
       request = gitHubRepoScoresRequestRepository.save(newRequest);
     }
     return new PostGitHubRepoScoresResponseBodyDto(request.getId());
@@ -48,14 +49,28 @@ public class GitHubRepoScoresService {
         gitHubRepoScoresRequestRepository.findById(requestId);
     if (optionalRequest.isPresent()) {
       GitHubRepoScoresRequestEntity request = optionalRequest.get();
-      List<GitHubRepositorySearchResultItem> repositories =
-          objectMapper.readValue(
-              request.getSearchResult(),
-              objectMapper
-                  .getTypeFactory()
-                  .constructCollectionType(List.class, GitHubRepositorySearchResultItem.class));
+      List<GitHubRepositorySearchResultItem> repositories = null;
+      if (request.getRepositories() != null) {
+        repositories =
+            objectMapper.readValue(
+                request.getRepositories(),
+                objectMapper
+                    .getTypeFactory()
+                    .constructCollectionType(List.class, GitHubRepositorySearchResultItem.class));
+      }
+
+      String createdParam = request.getCreated() != null ? request.getCreated().toString() : null;
+      String languageParam = request.getLanguage();
+      Map<String, String> queryParams = new HashMap<>();
+      queryParams.put("created", createdParam);
+      queryParams.put("language", languageParam);
+
       return new GetGitHubRepoScoresResponseBodyDto(
-          requestId, request.isProcessed(), request.getProcessedTimestamp(), repositories);
+          requestId,
+          request.isProcessed(),
+          request.getProcessedTimestamp(),
+          queryParams,
+          repositories);
     }
     return null;
   }

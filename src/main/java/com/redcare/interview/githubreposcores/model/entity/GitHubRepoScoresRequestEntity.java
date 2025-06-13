@@ -46,8 +46,8 @@ public class GitHubRepoScoresRequestEntity {
   @Column(name = "language")
   private String language;
 
-  @Column(name = "search_result")
-  private String searchResult;
+  @Column(name = "repositories")
+  private String repositories;
 
   @CreatedDate
   @Column(name = "created_date")

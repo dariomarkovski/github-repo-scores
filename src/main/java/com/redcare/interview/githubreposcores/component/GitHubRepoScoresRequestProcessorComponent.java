@@ -22,7 +22,6 @@ public class GitHubRepoScoresRequestProcessorComponent {
 
   private final GitHubRepoScoresRequestRepository gitHubRepoScoresRequestRepository;
   private final GitHubRepositorySearchHttpService gitHubRepositorySearchHttpService;
-  private final GitHubRepoScoresRequestProcessorComponent gitHubRepositoriesRetrieverComponent;
   private final GithubRepoScoresCalculatorComponent githubRepoScoresCalculatorComponent;
   private final ObjectMapper objectMapper;
 
@@ -33,12 +32,12 @@ public class GitHubRepoScoresRequestProcessorComponent {
             unprocessedRequest.getCreated(), unprocessedRequest.getLanguage());
     GitHubRepositorySearchResult gitHubRepositorySearchResult =
         gitHubRepositorySearchHttpService.searchRepositories(query);
-    List<GitHubRepositorySearchResultItem> searchResult = gitHubRepositorySearchResult.getItems();
+    List<GitHubRepositorySearchResultItem> repositories = gitHubRepositorySearchResult.getItems();
 
-    githubRepoScoresCalculatorComponent.calculateRepositoryScore(searchResult);
-    searchResult.sort(Comparator.comparingDouble(GitHubRepositorySearchResultItem::getScore));
+    githubRepoScoresCalculatorComponent.calculateRepositoryScore(repositories);
+    repositories.sort(Comparator.comparingDouble(GitHubRepositorySearchResultItem::getScore));
 
-    unprocessedRequest.setSearchResult(objectMapper.writeValueAsString(searchResult));
+    unprocessedRequest.setRepositories(objectMapper.writeValueAsString(repositories));
     unprocessedRequest.setProcessed(true);
     unprocessedRequest.setProcessedTimestamp(Instant.now());
     gitHubRepoScoresRequestRepository.save(unprocessedRequest);

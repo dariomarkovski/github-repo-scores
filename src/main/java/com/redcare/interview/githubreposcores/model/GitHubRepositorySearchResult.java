@@ -3,10 +3,12 @@ package com.redcare.interview.githubreposcores.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@AllArgsConstructor
 public class GitHubRepositorySearchResult {
 
   @JsonProperty("total_count")
@@ -20,6 +22,7 @@ public class GitHubRepositorySearchResult {
 
   @Getter
   @Setter
+  @AllArgsConstructor
   public static class GitHubRepositorySearchResultItem {
 
     @JsonProperty("id")
